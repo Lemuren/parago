@@ -1,0 +1,27 @@
+# Tasks in Parago are root-level keys such as `build` here.
+build: echo "Building..." && sleep 2
+
+# You can name tasks whatever you want, as long as it's unique within
+# a workflow file.
+test:
+  cmd:  echo "Running tests..." && sleep 2
+  deps: [build]
+
+# Above you can see the two styles of task definition.
+# The simple style of task: command for tasks with no dependencies,
+# and the full style with separate deps and cmd fields.
+
+# Parago will parallelize tasks while respecting dependencies.
+# The task below will run in parallel with build, while the
+# test task will wait for build to complete. We'll use the
+# full style here, but we could've used the same style as for
+# the build task.
+lint:
+  cmd: echo "Linting..." && sleep 1
+
+# A task can have zero or more dependencies. If a task fails,
+# parago will abort. By supplying the --relax flag parago
+# will only abort tasks dependent on failed tasks.
+package:
+  cmd: echo "Packaging" && sleep 1
+  deps: [build, test, lint]
