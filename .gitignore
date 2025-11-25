@@ -1,0 +1,2 @@
+# Ignore the binary when building directly in the src/ directory.
+src/parago
